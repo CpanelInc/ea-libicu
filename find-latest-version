@@ -1,5 +1,5 @@
 #!/usr/local/cpanel/3rdparty/bin/perl
-# cpanel - find-latest-version                  Copyright(c) 2019 cPanel, L.L.C.
+# cpanel - find-latest-version                  Copyright(c) 2020 cPanel, L.L.C.
 #                                                           All rights Reserved.
 # copyright@cpanel.net                                         http://cpanel.net
 # This code is subject to the cPanel license. Unauthorized copying is prohibited
@@ -13,6 +13,8 @@ use Cpanel::JSON::XS;
 
 use lib "../ea-tools/lib/ea4_tool";    # assumes ea-tools is checked out next to this repo
 use ea4_tool::util ();
+
+ea4_tool::util::find_latest_version( \&_get_required, \&_add_sum ) if !caller();
 
 ###############
 #### helpers ##
@@ -70,8 +72,6 @@ sub _add_sum {
 
     return;
 }
-
-ea4_tool::util::find_latest_version( \&_get_required, \&_add_sum ) if !caller();
 
 __END__
 
