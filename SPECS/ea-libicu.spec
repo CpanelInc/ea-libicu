@@ -104,6 +104,8 @@ ln -sf lib/libicudata.so %{buildroot}%{prefix_lib}/libicudata.so.%{version_major
 ln -sf lib/libicudata.so %{buildroot}%{prefix_lib}/libicudata.so.%{version_major}.%{version_minor}
 
 for f in config/*.pc; do
+    sed -i 's:prefix = /usr/local:prefix = /opt/cpanel/ea-libicu:' $f
+    sed -i 's:libdir = ${exec_prefix}/lib:libdir = ${exec_prefix}/lib64:' $f
     file=`basename $f`
     install $f %{buildroot}%{prefix_lib}/pkgconfig/$file;
 done
@@ -114,6 +116,7 @@ install config/icu-config %{buildroot}%{prefix_bin}/icu-config
 install tools/icuinfo/icuinfo %{buildroot}%{prefix_bin}/icuinfo
 
 mkdir -p %{buildroot}%{prefix_inc}/layout
+mkdir -p %{buildroot}%{prefix_inc}/unicode
 
 for f in `find . -name '*.h'`; do
     install -D $f %{buildroot}%{prefix_inc}/$f;
@@ -121,6 +124,12 @@ done
 
 mv -f %{buildroot}%{prefix_inc}/layoutex/layout/*.h %{buildroot}%{prefix_inc}/layout/
 mv -f %{buildroot}%{prefix_inc}/samples/layout/*.h %{buildroot}%{prefix_inc}/layout/
+
+cp -f %{buildroot}%{prefix_inc}/tools/ctestfw/unicode/*.h %{buildroot}%{prefix_inc}/unicode/
+cp -f %{buildroot}%{prefix_inc}/common/unicode/*.h %{buildroot}%{prefix_inc}/unicode/
+cp -f %{buildroot}%{prefix_inc}/extra/uconv/unicode/*.h %{buildroot}%{prefix_inc}/unicode/
+cp -f %{buildroot}%{prefix_inc}/i18n/unicode/*.h %{buildroot}%{prefix_inc}/unicode/
+cp -f %{buildroot}%{prefix_inc}/io/unicode/*.h %{buildroot}%{prefix_inc}/unicode/
 
 %files
 %defattr(755,root,root,755)
@@ -165,6 +174,7 @@ mv -f %{buildroot}%{prefix_inc}/samples/layout/*.h %{buildroot}%{prefix_inc}/lay
 %{prefix_inc}/tools/*/*/*.h
 %{prefix_inc}/tools/*/*.h
 %{prefix_lib}/pkgconfig/*.pc
+%{prefix_inc}/unicode/*.h
 
 %changelog
 * Tue Mar 17 2020 Julian Brown <julian.brown@cpanel.net> - 66.1-1
