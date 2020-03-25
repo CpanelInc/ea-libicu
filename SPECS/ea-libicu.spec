@@ -3,7 +3,7 @@
 %define pkg_name  %{ns_prefix}-%{pkg_base}
 %define _prefix   /opt/cpanel/%{ns_prefix}-%{pkg_base}
 %define prefix_dir /opt/cpanel/%{ns_prefix}-%{pkg_base}
-%define prefix_lib %{prefix_dir}/%{_lib}
+%define prefix_lib %{prefix_dir}/lib
 %define prefix_bin %{prefix_dir}/bin
 %define prefix_inc %{prefix_dir}/include
 
@@ -63,7 +63,7 @@ The files needed for developing applications with ea-libicu.
 %endif
 
 cd icu4c/source
-./configure
+./configure --prefix=/opt/cpanel/ea-libicu --enable-rpath
 make -j8
 
 %install
@@ -79,33 +79,27 @@ install icu4c/license.html %{buildroot}%{prefix_dir}
 
 cd icu4c/source
 
-install lib/libicuuc.so %{buildroot}%{prefix_lib}
-ln -sf lib/libicuuc.so %{buildroot}%{prefix_lib}/libicuuc.so.%{version_major}
-ln -sf lib/libicuuc.so %{buildroot}%{prefix_lib}/libicuuc.so.%{version_major}.%{version_minor}
+install lib/libicuuc.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}
+install lib/libicui18n.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}
+install lib/libicuio.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}
+install lib/libicutu.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}
+install lib/libicudata.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}
+install lib/libicudata.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}
 
-install lib/libicui18n.so %{buildroot}%{prefix_lib}
-ln -sf lib/libicui18n.so %{buildroot}%{prefix_lib}/libicui18n.so.%{version_major}
-ln -sf lib/libicui18n.so %{buildroot}%{prefix_lib}/libicui18n.so.%{version_major}.%{version_minor}
-
-install lib/libicuio.so %{buildroot}%{prefix_lib}
-ln -sf lib/libicuio.so %{buildroot}%{prefix_lib}/libicuio.so.%{version_major}
-ln -sf lib/libicuio.so %{buildroot}%{prefix_lib}/libicuio.so.%{version_major}.%{version_minor}
-
-install lib/libicutu.so %{buildroot}%{prefix_lib}
-ln -sf lib/libicutu.so %{buildroot}%{prefix_lib}/libicutu.so.%{version_major}
-ln -sf lib/libicutu.so %{buildroot}%{prefix_lib}/libicutu.so.%{version_major}.%{version_minor}
-
-install lib/libicudata.so %{buildroot}%{prefix_lib}
-ln -sf lib/libicudata.so %{buildroot}%{prefix_lib}/libicudata.so.%{version_major}
-ln -sf lib/libicudata.so %{buildroot}%{prefix_lib}/libicudata.so.%{version_major}.%{version_minor}
-
-install lib/libicudata.so %{buildroot}%{prefix_lib}
-ln -sf lib/libicudata.so %{buildroot}%{prefix_lib}/libicudata.so.%{version_major}
-ln -sf lib/libicudata.so %{buildroot}%{prefix_lib}/libicudata.so.%{version_major}.%{version_minor}
+cd lib
+ln -s libicuuc.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicuuc.so.%{version_major}
+ln -s libicuuc.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicuuc.so
+ln -s libicui18n.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicui18n.so.%{version_major}
+ln -s libicui18n.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicui18n.so
+ln -s libicuio.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicuio.so.%{version_major}
+ln -s libicuio.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicuio.so
+ln -s libicutu.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicutu.so.%{version_major}
+ln -s libicutu.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicutu.so
+ln -s libicudata.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicudata.so.%{version_major}
+ln -s libicudata.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicudata.so
+cd ..
 
 for f in config/*.pc; do
-    sed -i 's:prefix = /usr/local:prefix = /opt/cpanel/ea-libicu:' $f
-    sed -i 's:libdir = ${exec_prefix}/lib:libdir = ${exec_prefix}/lib64:' $f
     file=`basename $f`
     install $f %{buildroot}%{prefix_lib}/pkgconfig/$file;
 done
