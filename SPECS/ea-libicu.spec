@@ -7,6 +7,10 @@
 %define prefix_bin %{prefix_dir}/bin
 %define prefix_inc %{prefix_dir}/include
 
+%if 0%{rhel} > 7
+%global debug_package %{nil}
+%endif
+
 # For whatever reason I cannot execute code in the define's here as
 # when the macro is invoked in the files section, they do not execute
 # and the information is critical, so unless someone can figure out a
