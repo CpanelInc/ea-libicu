@@ -61,7 +61,7 @@ sub _get_required {
     $version_in_name =~ s/\./\-/g;
 
     $url = "https://github.com/unicode-org/icu/archive/release-$version_in_name.tar.gz";
-
+    $version =~ s/\.(\d+)$//g;
     return ( $version, $url, $name );
 }
 
