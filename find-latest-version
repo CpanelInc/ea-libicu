@@ -58,7 +58,7 @@ sub _get_required {
     }
 
     $name .= ".tar.gz";
-    $name =~ s/\-/\./g;
+    $name =~ s{(.*)\-}{$1\.}g;
 
     my $version_in_name = $version;
     $version_in_name =~ s/\./\-/g;
