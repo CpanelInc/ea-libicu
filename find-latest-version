@@ -49,13 +49,15 @@ sub _get_required {
 
     die "Cannot find latest version" if !defined $tag;
 
-    $name    = $tag->{'name'};
+    $name    = $tag->{name};
     if ($name =~ m/^release-(\d+)-(\d+)$/) {
         $version = "$1.$2";
     }
     else {
         die "That should not have happened";
     }
+
+    $name .= ".tar.gz";
 
     my $version_in_name = $version;
     $version_in_name =~ s/\./\-/g;
