@@ -7,6 +7,10 @@
 %define prefix_bin %{prefix_dir}/bin
 %define prefix_inc %{prefix_dir}/include
 
+%if 0%{rhel} > 7
+%global debug_package %{nil}
+%endif
+
 # For whatever reason I cannot execute code in the define's here as
 # when the macro is invoked in the files section, they do not execute
 # and the information is critical, so unless someone can figure out a
@@ -19,7 +23,7 @@ Summary: International Components for Unicode.
 Name: %{pkg_name}
 Version: %{version_major}.%{version_minor}
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: https://github.com/unicode-org/icu/blob/master/icu4c/LICENSE
 Vendor: cPanel, Inc.
@@ -171,6 +175,9 @@ cp -f %{buildroot}%{prefix_inc}/io/unicode/*.h %{buildroot}%{prefix_inc}/unicode
 %{prefix_inc}/unicode/*.h
 
 %changelog
+* Wed May 20 2020 Julian Brown <julian.brown@cpanel.net> - 66-2
+- ZC-6843: Fix problems on CentOS 8
+
 * Tue Mar 17 2020 Julian Brown <julian.brown@cpanel.net> - 66.1-1
 - ZC-6349: Initial rpm creation
 
