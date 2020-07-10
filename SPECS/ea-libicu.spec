@@ -16,14 +16,14 @@
 # and the information is critical, so unless someone can figure out a
 # way to get this extracted from {version} I am listening.
 
-%define version_major 66
+%define version_major 67.1
 %define version_minor 1
 
 Summary: International Components for Unicode.
 Name: %{pkg_name}
 Version: %{version_major}.%{version_minor}
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 2
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: https://github.com/unicode-org/icu/blob/master/icu4c/LICENSE
 Vendor: cPanel, Inc.
@@ -175,6 +175,9 @@ cp -f %{buildroot}%{prefix_inc}/io/unicode/*.h %{buildroot}%{prefix_inc}/unicode
 %{prefix_inc}/unicode/*.h
 
 %changelog
+* Fri Jul 10 2020 Cory McIntire <cory@cpanel.net> - 67.1-1
+- EA-9155: Update ea-libicu from v66 to v67.1
+
 * Wed May 20 2020 Julian Brown <julian.brown@cpanel.net> - 66-2
 - ZC-6843: Fix problems on CentOS 8
 
