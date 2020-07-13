@@ -16,7 +16,7 @@
 # and the information is critical, so unless someone can figure out a
 # way to get this extracted from {version} I am listening.
 
-%define version_major 67.1
+%define version_major 67
 %define version_minor 1
 
 Summary: International Components for Unicode.
@@ -32,8 +32,13 @@ Source: release-%{version_major}-%{version_minor}.tar.gz
 URL: https://github.com/unicode-org/icu
 BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 
+%if 0%{rhel} < 8
 %if 0%{rhel} < 7
 BuildRequires: python34
+%else
+BuildRequires: python
+BuildRequires: python3
+%endif
 BuildRequires: devtoolset-7-toolchain
 BuildRequires: devtoolset-7-libatomic-devel
 BuildRequires: devtoolset-7-gcc
@@ -62,7 +67,7 @@ The files needed for developing applications with ea-libicu.
 
 %build
 
-%if 0%{?rhel} < 7
+%if 0%{?rhel} < 8
 . /opt/rh/devtoolset-7/enable
 %endif
 
