@@ -49,7 +49,7 @@ sub _get_required {
 
     die "Cannot find latest version" if !defined $tag;
 
-    $name    = $tag->{'name'};
+    $name    = $tag->{name};
     if ($name =~ m/^release-(\d+)-(\d+)$/) {
         $version = "$1.$2";
     }
@@ -57,11 +57,13 @@ sub _get_required {
         die "That should not have happened";
     }
 
+    $name .= ".tar.gz";
+    $name =~ s{(.*)\-}{$1\.}g;
+
     my $version_in_name = $version;
     $version_in_name =~ s/\./\-/g;
 
     $url = "https://github.com/unicode-org/icu/archive/release-$version_in_name.tar.gz";
-
     return ( $version, $url, $name );
 }
 
