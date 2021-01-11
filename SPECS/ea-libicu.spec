@@ -16,8 +16,8 @@
 # and the information is critical, so unless someone can figure out a
 # way to get this extracted from {version} I am listening.
 
-%define version_major 67
-%define version_minor 1
+%define version_major 68
+%define version_minor 2
 
 Summary: International Components for Unicode.
 Name: %{pkg_name}
@@ -180,6 +180,9 @@ cp -f %{buildroot}%{prefix_inc}/io/unicode/*.h %{buildroot}%{prefix_inc}/unicode
 %{prefix_inc}/unicode/*.h
 
 %changelog
+* Mon Jan 11 2021 Cory McIntire <cory@cpanel.net> - 68.2-1
+- EA-9527: Update ea-libicu from v67 to v68.2
+
 * Fri Jul 10 2020 Cory McIntire <cory@cpanel.net> - 67.1-1
 - EA-9155: Update ea-libicu from v66 to v67.1
 
