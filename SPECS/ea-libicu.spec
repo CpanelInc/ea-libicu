@@ -23,7 +23,7 @@ Summary: International Components for Unicode.
 Name: %{pkg_name}
 Version: %{version_major}.%{version_minor}
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 1
+%define release_prefix 2
 Release: %{release_prefix}%{?dist}.cpanel
 License: https://github.com/unicode-org/icu/blob/master/icu4c/LICENSE
 Vendor: cPanel, Inc.
@@ -180,6 +180,9 @@ cp -f %{buildroot}%{prefix_inc}/io/unicode/*.h %{buildroot}%{prefix_inc}/unicode
 %{prefix_inc}/unicode/*.h
 
 %changelog
+* Thu Jan 21 2021 Cory McIntire <cory@cpanel.net> - 68-2
+- EA-9528: Fix SPEC file to handle updates properly
+
 * Mon Jan 11 2021 Cory McIntire <cory@cpanel.net> - 68.2-1
 - EA-9527: Update ea-libicu from v67 to v68.2
 
