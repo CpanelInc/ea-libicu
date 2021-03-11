@@ -11,24 +11,18 @@
 %global debug_package %{nil}
 %endif
 
-# For whatever reason I cannot execute code in the define's here as
-# when the macro is invoked in the files section, they do not execute
-# and the information is critical, so unless someone can figure out a
-# way to get this extracted from {version} I am listening.
-
-%define version_major 67
-%define version_minor 1
-
 Summary: International Components for Unicode.
 Name: %{pkg_name}
-Version: %{version_major}.%{version_minor}
+%define version_major 68
+%define tarball_version 68-2
+Version: 68.2
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: https://github.com/unicode-org/icu/blob/master/icu4c/LICENSE
 Vendor: cPanel, Inc.
 Group: Applications/Internet
-Source: release-%{version_major}-%{version_minor}.tar.gz
+Source: release-%{tarball_version}.tar.gz
 URL: https://github.com/unicode-org/icu
 BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 
@@ -63,7 +57,7 @@ Group: Development/Libraries
 The files needed for developing applications with ea-libicu.
 
 %prep
-%setup -q -n icu-release-%{version_major}-%{version_minor}
+%setup -q -n icu-release-%{tarball_version}
 
 %build
 
@@ -88,24 +82,24 @@ install icu4c/license.html %{buildroot}%{prefix_dir}
 
 cd icu4c/source
 
-install lib/libicuuc.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}
-install lib/libicui18n.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}
-install lib/libicuio.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}
-install lib/libicutu.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}
-install lib/libicudata.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}
-install lib/libicudata.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}
+install lib/libicuuc.so.%{version} %{buildroot}%{prefix_lib}
+install lib/libicui18n.so.%{version} %{buildroot}%{prefix_lib}
+install lib/libicuio.so.%{version} %{buildroot}%{prefix_lib}
+install lib/libicutu.so.%{version} %{buildroot}%{prefix_lib}
+install lib/libicudata.so.%{version} %{buildroot}%{prefix_lib}
+install lib/libicudata.so.%{version} %{buildroot}%{prefix_lib}
 
 cd lib
-ln -s libicuuc.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicuuc.so.%{version_major}
-ln -s libicuuc.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicuuc.so
-ln -s libicui18n.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicui18n.so.%{version_major}
-ln -s libicui18n.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicui18n.so
-ln -s libicuio.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicuio.so.%{version_major}
-ln -s libicuio.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicuio.so
-ln -s libicutu.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicutu.so.%{version_major}
-ln -s libicutu.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicutu.so
-ln -s libicudata.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicudata.so.%{version_major}
-ln -s libicudata.so.%{version_major}.%{version_minor} %{buildroot}%{prefix_lib}/libicudata.so
+ln -s libicuuc.so.%{version} %{buildroot}%{prefix_lib}/libicuuc.so.%{version_major}
+ln -s libicuuc.so.%{version} %{buildroot}%{prefix_lib}/libicuuc.so
+ln -s libicui18n.so.%{version} %{buildroot}%{prefix_lib}/libicui18n.so.%{version_major}
+ln -s libicui18n.so.%{version} %{buildroot}%{prefix_lib}/libicui18n.so
+ln -s libicuio.so.%{version} %{buildroot}%{prefix_lib}/libicuio.so.%{version_major}
+ln -s libicuio.so.%{version} %{buildroot}%{prefix_lib}/libicuio.so
+ln -s libicutu.so.%{version} %{buildroot}%{prefix_lib}/libicutu.so.%{version_major}
+ln -s libicutu.so.%{version} %{buildroot}%{prefix_lib}/libicutu.so
+ln -s libicudata.so.%{version} %{buildroot}%{prefix_lib}/libicudata.so.%{version_major}
+ln -s libicudata.so.%{version} %{buildroot}%{prefix_lib}/libicudata.so
 cd ..
 
 for f in config/*.pc; do
@@ -138,19 +132,19 @@ cp -f %{buildroot}%{prefix_inc}/io/unicode/*.h %{buildroot}%{prefix_inc}/unicode
 %defattr(755,root,root,755)
 %{prefix_lib}/libicuuc.so
 %{prefix_lib}/libicuuc.so.%{version_major}
-%{prefix_lib}/libicuuc.so.%{version_major}.%{version_minor}
+%{prefix_lib}/libicuuc.so.%{version}
 %{prefix_lib}/libicui18n.so
 %{prefix_lib}/libicui18n.so.%{version_major}
-%{prefix_lib}/libicui18n.so.%{version_major}.%{version_minor}
+%{prefix_lib}/libicui18n.so.%{version}
 %{prefix_lib}/libicuio.so
 %{prefix_lib}/libicuio.so.%{version_major}
-%{prefix_lib}/libicuio.so.%{version_major}.%{version_minor}
+%{prefix_lib}/libicuio.so.%{version}
 %{prefix_lib}/libicutu.so
 %{prefix_lib}/libicutu.so.%{version_major}
-%{prefix_lib}/libicutu.so.%{version_major}.%{version_minor}
+%{prefix_lib}/libicutu.so.%{version}
 %{prefix_lib}/libicudata.so
 %{prefix_lib}/libicudata.so.%{version_major}
-%{prefix_lib}/libicudata.so.%{version_major}.%{version_minor}
+%{prefix_lib}/libicudata.so.%{version}
 %defattr(644,root,root,755)
 %doc %{prefix_dir}/readme.html
 %doc %{prefix_dir}/license.html
@@ -180,6 +174,10 @@ cp -f %{buildroot}%{prefix_inc}/io/unicode/*.h %{buildroot}%{prefix_inc}/unicode
 %{prefix_inc}/unicode/*.h
 
 %changelog
+* Thu Jan 21 2021 Cory McIntire <cory@cpanel.net> - 68.2-1
+- EA-9528: Update ea-libicu from v67 to v68.2
+		   Fix SPEC file to handle updates properly
+
 * Fri Jul 10 2020 Cory McIntire <cory@cpanel.net> - 67.1-1
 - EA-9155: Update ea-libicu from v66 to v67.1
 

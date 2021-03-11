@@ -1,0 +1,52 @@
+#!/usr/local/cpanel/3rdparty/bin/perl
+# cpanel - ea4-tool-post-update                 Copyright(c) 2021 cPanel, L.L.C.
+#                                                           All rights Reserved.
+# copyright@cpanel.net                                         http://cpanel.net
+# This code is subject to the cPanel license. Unauthorized copying is prohibited
+
+package ea_libicu::ea4_tool_post_update;
+
+use strict;
+use warnings;
+
+use lib "../ea-tools/lib/ea4_tool";    # assumes ea-tools is checked out next to this repo
+use ea4_tool::util ();
+use File::chdir;
+use Path::Tiny;
+
+exit( run() ? 0 : 1 ) if !caller;
+
+sub run {
+    my $repo_path      = ea4_tool::util::get_path_of_repo('ea-libicu');
+    my $spec           = ea4_tool::util::specfile($CWD);
+    my $version        = ea4_tool::util::spec_get_version($spec) || die "Could not determine version from SPEC\n";
+
+    my ( $major_ver, $minor_ver ) = split /\./, $version;
+    my $tarball_ver = $version;
+    $tarball_ver =~ s/\./-/;
+
+    my @lines = path($spec)->lines;
+    foreach my $line (@lines) {
+        if ( $line =~ /^%define\s+version_major/ ) {
+            $line =~ s/[0-9]+/$major_ver/;
+        }
+        elsif ( $line =~ /^%define\s+tarball_version/ ) {
+            $line =~ s/[0-9\-]+/$tarball_ver/;
+        }
+    }
+
+    path($spec)->spew(@lines);
+
+    print "Committing SPEC file change …\n";
+    my $git    = ea4_tool::util::git($CWD);
+    my $branch = $git->current_branch();
+    
+    $git->run( add    => $spec );
+    $git->run( commit => "-m", "$branch: Updated version_major and tarball_version" );
+    ea4_tool::util::push_to_upstream_or_origin( $git, "$branch" );
+
+    print "Done!\n";
+    return 1;
+}
+
+1;
