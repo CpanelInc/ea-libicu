@@ -14,17 +14,16 @@ use ea4_tool::util ();
 use File::chdir;
 use Path::Tiny;
 
-exit( run() ? 0 : 1 ) if !caller;
+exit( run(@ARGV) ? 0 : 1 ) if !caller;
 
 sub run {
-    my $repo_path      = ea4_tool::util::get_path_of_repo('ea-libicu');
-    my $spec           = ea4_tool::util::specfile($CWD);
-    my $version        = ea4_tool::util::spec_get_version($spec) || die "Could not determine version from SPEC\n";
+    my ( $old_ver, $new_ver ) = @_;
 
-    my ( $major_ver, $minor_ver ) = split /\./, $version;
-    my $tarball_ver = $version;
+    my ( $major_ver, $minor_ver ) = split /\./, $new_ver;
+    my $tarball_ver = $new_ver;
     $tarball_ver =~ s/\./-/;
 
+    my $spec  = ea4_tool::util::specfile($CWD);
     my @lines = path($spec)->lines;
     foreach my $line (@lines) {
         if ( $line =~ /^%define\s+version_major/ ) {
@@ -40,10 +39,10 @@ sub run {
     print "Committing SPEC file change …\n";
     my $git    = ea4_tool::util::git($CWD);
     my $branch = $git->current_branch();
-    
+
     $git->run( add    => $spec );
-    $git->run( commit => "-m", "$branch: Updated version_major and tarball_version" );
-    ea4_tool::util::push_to_upstream_or_origin( $git, "$branch" );
+    $git->run( commit => "-m", "$branch: ea4-tool-post-update version_major to $major_ver and tarball_version to $tarball_ver" );
+    ea4_tool::util::push_to_upstream_or_origin( $git, $branch );
 
     print "Done!\n";
     return 1;
