@@ -13,9 +13,9 @@
 
 Summary: International Components for Unicode.
 Name: %{pkg_name}
-%define version_major 68
-%define tarball_version 68-2
-Version: 68.2
+%define version_major 69
+%define tarball_version 69-1
+Version: 69.1
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
 %define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
@@ -174,6 +174,9 @@ cp -f %{buildroot}%{prefix_inc}/io/unicode/*.h %{buildroot}%{prefix_inc}/unicode
 %{prefix_inc}/unicode/*.h
 
 %changelog
+* Fri Apr 23 2021 Travis Holloway <t.holloway@cpanel.net> - 69.1-1
+- EA-9714: Update ea-libicu from v68.2 to v69.1
+
 * Thu Jan 21 2021 Cory McIntire <cory@cpanel.net> - 68.2-1
 - EA-9528: Update ea-libicu from v67 to v68.2
 		   Fix SPEC file to handle updates properly
