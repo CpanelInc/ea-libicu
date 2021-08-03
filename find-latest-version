@@ -25,9 +25,9 @@ sub _get_required {
 
     my ( $version, $url, $name );
 
-    my $res = $http->get("https://api.github.com/repos/unicode-org/icu/tags");
+    #my $res = $http->get("https://api.github.com/repos/unicode-org/icu/tags");
 
-    my $tag_refs = Cpanel::JSON::Load( $res->content );
+    my $tag_refs = [ { name => "release-67-1" }]; # Cpanel::JSON::Load( $res->content );
     my $tag;
 
     # "release-66-1"
