@@ -9,8 +9,6 @@ package ea_libzip::find_latest_version;
 use strict;
 use warnings;
 
-use Cpanel::JSON::XS;
-
 use lib "../ea-tools/lib/ea4_tool";    # assumes ea-tools is checked out next to this repo
 use ea4_tool::util ();
 
@@ -27,14 +25,14 @@ sub _get_required {
 
     #my $res = $http->get("https://api.github.com/repos/unicode-org/icu/tags");
 
-    my $tag_refs = [ { name => "release-67-1" }]; # Cpanel::JSON::Load( $res->content );
+    my $tag_refs = [ { name => "release-67-1" } ];    # ea4_tool::util::json2ref( $res->content );
     my $tag;
 
     # "release-66-1"
 
     foreach my $tag_ref ( @{$tag_refs} ) {
         my $tname = $tag_ref->{'name'};
-        next if ($tname !~ m/^release-\d+-\d+$/);
+        next if ( $tname !~ m/^release-\d+-\d+$/ );
 
         if ( !defined $tag ) {
             $tag = $tag_ref;
@@ -49,8 +47,8 @@ sub _get_required {
 
     die "Cannot find latest version" if !defined $tag;
 
-    $name    = $tag->{name};
-    if ($name =~ m/^release-(\d+)-(\d+)$/) {
+    $name = $tag->{name};
+    if ( $name =~ m/^release-(\d+)-(\d+)$/ ) {
         $version = "$1.$2";
     }
     else {
