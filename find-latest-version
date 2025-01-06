@@ -23,13 +23,13 @@ sub _get_required {
 
     my ( $version, $url, $name );
 
-    #my $res = $http->get("https://api.github.com/repos/unicode-org/icu/tags");
+    my $res = $http->get("https://api.github.com/repos/unicode-org/icu/tags");
 
-    my $tag_refs = [ { name => "release-67-1" } ];    # ea4_tool::util::json2ref( $res->{content} );
+    my $tag_refs = ea4_tool::util::json2ref( $res->{content} );
+
     my $tag;
 
-    # "release-66-1"
-
+    # "release-76-1"
     foreach my $tag_ref ( @{$tag_refs} ) {
         my $tname = $tag_ref->{'name'};
         next if ( $tname !~ m/^release-\d+-\d+$/ );
@@ -56,12 +56,12 @@ sub _get_required {
     }
 
     $name .= ".tar.gz";
-    $name =~ s{(.*)\-}{$1\.}g;
 
     my $version_in_name = $version;
     $version_in_name =~ s/\./\-/g;
 
     $url = "https://github.com/unicode-org/icu/archive/release-$version_in_name.tar.gz";
+
     return ( $version, $url, $name );
 }
 
