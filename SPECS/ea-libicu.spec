@@ -9,8 +9,8 @@
 
 Summary: International Components for Unicode.
 Name: %{pkg_name}
-%define version_major 69
-%define tarball_version 69-1
+%define version_major 76
+%define tarball_version 76-1
 Version: 76.1
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
 %define release_prefix 1
