@@ -116,7 +116,6 @@ for f in `find . -name '*.h'`; do
 done
 
 mv -f %{buildroot}%{prefix_inc}/layoutex/layout/*.h %{buildroot}%{prefix_inc}/layout/
-mv -f %{buildroot}%{prefix_inc}/samples/layout/*.h %{buildroot}%{prefix_inc}/layout/
 
 cp -f %{buildroot}%{prefix_inc}/tools/ctestfw/unicode/*.h %{buildroot}%{prefix_inc}/unicode/
 cp -f %{buildroot}%{prefix_inc}/common/unicode/*.h %{buildroot}%{prefix_inc}/unicode/
