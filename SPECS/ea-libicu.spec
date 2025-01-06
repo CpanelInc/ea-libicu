@@ -11,9 +11,9 @@ Summary: International Components for Unicode.
 Name: %{pkg_name}
 %define version_major 69
 %define tarball_version 69-1
-Version: 69.1
+Version: 76.1
 # Doing release_prefix this way for Release allows for OBS-proof versioning, See EA-4544 for more details
-%define release_prefix 2
+%define release_prefix 1
 Release: %{release_prefix}%{?dist}.cpanel
 License: https://github.com/unicode-org/icu/blob/master/icu4c/LICENSE
 Vendor: cPanel, Inc.
@@ -170,6 +170,9 @@ cp -f %{buildroot}%{prefix_inc}/io/unicode/*.h %{buildroot}%{prefix_inc}/unicode
 %{prefix_inc}/unicode/*.h
 
 %changelog
+* Mon Jan 06 2025 Dan Muey <daniel.muey@webpros.com> - 76.1-1
+- EA-12626: Update ea-libicu from v69.1 to v76.1
+
 * Mon May 08 2023 Julian Brown <julian.brown@cpanel.net> - 69.1-2
 - ZC-10936: Clean up Makefile and remove debug-package-nil
 
