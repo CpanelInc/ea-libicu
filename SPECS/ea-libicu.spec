@@ -167,6 +167,7 @@ cp -f %{buildroot}%{prefix_inc}/io/unicode/*.h %{buildroot}%{prefix_inc}/unicode
 %{prefix_inc}/tools/*/*.h
 %{prefix_lib}/pkgconfig/*.pc
 %{prefix_inc}/unicode/*.h
+%{prefix_inc}/stubdata/*.h
 
 %changelog
 * Mon Jan 06 2025 Dan Muey <daniel.muey@webpros.com> - 76.1-1
