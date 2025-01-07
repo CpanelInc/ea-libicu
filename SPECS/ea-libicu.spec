@@ -22,19 +22,15 @@ Source: release-%{tarball_version}.tar.gz
 URL: https://github.com/unicode-org/icu
 BuildRoot: %{_tmppath}/%{pkg_name}-%{version}-%{release}-root
 
-%if 0%{rhel} < 8
 %if 0%{rhel} < 7
 BuildRequires: python34
 %else
-BuildRequires: python
 BuildRequires: python3
 %endif
-BuildRequires: devtoolset-7-toolchain
-BuildRequires: devtoolset-7-libatomic-devel
-BuildRequires: devtoolset-7-gcc
-BuildRequires: devtoolset-7-gcc-c++
+
+%if 0%{rhel} < 8
+BuildRequires: devtoolset-8 devtoolset-8-gcc devtoolset-8-gcc-c++ kernel-devel
 %else
-BuildRequires: python3
 BuildRequires: gcc
 %endif
 
@@ -58,7 +54,7 @@ The files needed for developing applications with ea-libicu.
 %build
 
 %if 0%{?rhel} < 8
-. /opt/rh/devtoolset-7/enable
+. /opt/rh/devtoolset-8/enable
 %endif
 
 cd icu4c/source
